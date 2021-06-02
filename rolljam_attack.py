@@ -476,19 +476,16 @@ def main():
 
     tb = jam_rec(input_tx_freq=freqs[chosen_freq_number], file_output="first_record")
     tb.start()
-    try:
-        raw_input('Press Enter to stop recording: ')
-        def quitting():
-            print "quit 1"
-            tb.stop()
-            tb.wait()
-        qapp.aboutToQuit.connect(quitting)
-        print "after quit"
-        qapp.exec_()
-        print "after exec"
-
-    except EOFError:
-        pass
+    tb.show()
+    print "close window to stop recording "
+    # try:
+    #
+    #     raw_input('close window to stop recording and press enter: ')
+    #     tb.stop()
+    #     tb.wait()
+    #
+    # except EOFError:
+    #     pass
 
     # record 2
 
