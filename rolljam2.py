@@ -336,9 +336,13 @@ class jam_rec(gr.top_block, Qt.QWidget):
 
 def main(top_block_cls=jam_rec, options=None):
 
-    qapp = Qt.QApplication(sys.argv)
 
-    tb = top_block_cls(input_tx_freq=433.89e6, file_output="signal")
+    chosen_number = input("Choose: 0: first record, 1: second record\n")
+    chosen_freq_number = input("Choose a frequency: 0: 433.89e6, 1: 433.847e6 2: custom\n")
+    freqs = [433.89e6, 433.847e6]
+
+    qapp = Qt.QApplication(sys.argv)
+    tb = top_block_cls(input_tx_freq=freqs[chosen_freq_number], file_output=first_second[chosen_number])
     tb.start()
     tb.show()
 
