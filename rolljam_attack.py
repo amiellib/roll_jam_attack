@@ -468,6 +468,7 @@ def main():
     chosen_type = input("Choose: 0: record and jam, 1: replay\n")
     if chosen_type == 0:
         #  jam record :
+        chosen_number = input("Choose: 0: first record, 1: second record\n")
         chosen_freq_number = input("Choose a frequency: 0: 433.89e6, 1: 433.847e6 2: custom\n")
         freqs = [433890000, 433847000]
         if chosen_freq_number == "2":
