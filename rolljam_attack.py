@@ -480,7 +480,6 @@ def main():
         tb.show()
         print "close window to stop recording"
         try:
-            raw_input('Press Enter to stop sending first record: ')
             def quitting():
                 tb.stop()
                 tb.wait()
@@ -499,7 +498,6 @@ def main():
         tb.show()
         print "close window to stop recording"
         try:
-            raw_input('Press Enter to stop sending first record: ')
             def quitting():
                 tb.stop()
                 tb.wait()
