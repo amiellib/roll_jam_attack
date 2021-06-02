@@ -479,10 +479,14 @@ def main():
     try:
         raw_input('Press Enter to stop recording: ')
         def quitting():
+            print "quit 1"
             tb.stop()
             tb.wait()
         qapp.aboutToQuit.connect(quitting)
+        print "after quit"
         qapp.exec_()
+        print "after exec"
+
     except EOFError:
         pass
 
