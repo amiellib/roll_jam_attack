@@ -338,7 +338,7 @@ def main(top_block_cls=jam_rec, options=None):
 
     qapp = Qt.QApplication(sys.argv)
 
-    tb = top_block_cls()
+    tb = top_block_cls(input_tx_freq=433.89e6, file_output="signal")
     tb.start()
     tb.show()
 
