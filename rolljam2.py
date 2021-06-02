@@ -336,7 +336,7 @@ class jam_rec(gr.top_block, Qt.QWidget):
 
 def main(top_block_cls=jam_rec, options=None):
 
-
+    first_second = ["first_record", "second_record"]
     chosen_number = input("Choose: 0: first record, 1: second record\n")
     chosen_freq_number = input("Choose a frequency: 0: 433.89e6, 1: 433.847e6 2: custom\n")
     freqs = [433.89e6, 433.847e6]
