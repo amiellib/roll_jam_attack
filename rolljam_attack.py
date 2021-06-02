@@ -464,73 +464,48 @@ class replay(gr.top_block, Qt.QWidget):
 
 
 def main():
+    first_second = ["first_record", "second_record"]
+    chosen_type = input("Choose: 0: record and jam, 1: replay\n")
+    if chosen_type == 0:
+        #  jam record :
+        chosen_freq_number = input("Choose a frequency: 0: 433.89e6, 1: 433.847e6 2: custom\n")
+        freqs = [433890000, 433847000]
+        if chosen_freq_number == "2":
+            print("asdas")
+            exit()
+        qapp = Qt.QApplication(sys.argv)
+        tb = jam_rec(input_tx_freq=freqs[chosen_freq_number], file_output=first_second[chosen_number])
+        tb.start()
+        tb.show()
+        print "close window to stop recording"
+        try:
+            raw_input('Press Enter to stop sending first record: ')
+            def quitting():
+                tb.stop()
+                tb.wait()
+            qapp.aboutToQuit.connect(quitting)
+            qapp.exec_()
+        except EOFError:
+            pass
 
-    #  jam record :
-    chosen_freq_number = input("Choose a frequency: 0: 433.89e6, 1: 433.847e6 2: custom\n")
-    freqs = [433890000, 433847000]
-    if chosen_freq_number == "2":
-        print("asdas")
-        exit()
-    qapp = Qt.QApplication(sys.argv)
+    if chosen_type == 1:
+        # replay first
+        chosen_number = input("Choose: 0: first record, 1: second record\n")
+        qapp = Qt.QApplication(sys.argv)
 
-
-    tb = jam_rec(input_tx_freq=freqs[chosen_freq_number], file_output="first_record")
-    tb.start()
-    tb.show()
-    raw_input("close window to stop recording and press enter")
-
-
-    tb = jam_rec(input_tx_freq=freqs[chosen_freq_number], file_output="second_record")
-    print "starting second recording"
-    tb.start()
-    try:
-        raw_input('Press Enter to stop recording: ')
-        def quitting():
-            tb.stop()
-            tb.wait()
-        qapp.aboutToQuit.connect(quitting)
-        qapp.exec_()
-    except EOFError:
-        pass
-
-    # replay first
-
-    qapp = Qt.QApplication(sys.argv)
-
-    tb = replay(input_tx_freq=freqs[chosen_freq_number], file_output="first_record")
-    tb.start()
-
-    try:
-        raw_input('Press Enter to stop sending first record: ')
-        def quitting():
-            tb.stop()
-            tb.wait()
-        qapp.aboutToQuit.connect(quitting)
-        qapp.exec_()
-    except EOFError:
-        pass
-
-
-    # replay second
-    try:
-        raw_input('Press Enter to stop playing the first: ')
-    except EOFError:
-        pass
-
-    qapp = Qt.QApplication(sys.argv)
-
-    tb = replay(input_tx_freq=freqs[chosen_freq_number], file_output="second_record")
-    tb.start()
-
-    try:
-        raw_input('Press Enter to stop sending second record: ')
-        def quitting():
-            tb.stop()
-            tb.wait()
-        qapp.aboutToQuit.connect(quitting)
-        qapp.exec_()
-    except EOFError:
-        pass
+        tb = replay(input_tx_freq=freqs[chosen_freq_number], file_output=first_second[chosen_number])
+        tb.start()
+        tb.show()
+        print "close window to stop recording"
+        try:
+            raw_input('Press Enter to stop sending first record: ')
+            def quitting():
+                tb.stop()
+                tb.wait()
+            qapp.aboutToQuit.connect(quitting)
+            qapp.exec_()
+        except EOFError:
+            pass
 
 
 if __name__ == '__main__':
