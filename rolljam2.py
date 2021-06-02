@@ -33,12 +33,13 @@ import osmosdr
 import sip
 import sys
 import time
+import os
 from gnuradio import qtgui
 
 
 class jam_rec(gr.top_block, Qt.QWidget):
 
-    def __init__(self, input_tx_freq=433.89e6):
+    def __init__(self, input_tx_freq=433.89e6, file_output="signal"):
         gr.top_block.__init__(self, "Jam Rec")
         Qt.QWidget.__init__(self)
         self.setWindowTitle("Jam Rec")
@@ -255,7 +256,7 @@ class jam_rec(gr.top_block, Qt.QWidget):
         self.blocks_throttle_0 = blocks.throttle(gr.sizeof_gr_complex*1, samp_rate_jammer,True)
         self.blocks_repeat_0 = blocks.repeat(gr.sizeof_int*1, 8)
         self.blocks_float_to_complex_0 = blocks.float_to_complex(1)
-        self.blocks_file_sink_0 = blocks.file_sink(gr.sizeof_gr_complex*1, '/home/amiel/Desktop/carkey/replay-jamming-attack/signal.raw', False)
+        self.blocks_file_sink_0 = blocks.file_sink(gr.sizeof_gr_complex*1, os.path.abspath(os.getcwd()) + "/" + file_output + '.raw', False)
         self.blocks_file_sink_0.set_unbuffered(False)
         self.blocks_add_xx_0 = blocks.add_vcc(1)
         self.analog_sig_source_x_0 = analog.sig_source_c(samp_rate_jammer, analog.GR_COS_WAVE, signal_freq, ampl, 0)
