@@ -477,17 +477,7 @@ def main():
     tb = jam_rec(input_tx_freq=freqs[chosen_freq_number], file_output="first_record")
     tb.start()
     tb.show()
-    print "close window to stop recording "
-    # try:
-    #
-    #     raw_input('close window to stop recording and press enter: ')
-    #     tb.stop()
-    #     tb.wait()
-    #
-    # except EOFError:
-    #     pass
-
-    # record 2
+    raw_input("close window to stop recording and press enter")
 
 
     tb = jam_rec(input_tx_freq=freqs[chosen_freq_number], file_output="second_record")
