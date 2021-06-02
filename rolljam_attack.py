@@ -478,10 +478,13 @@ def main():
     tb.start()
     try:
         raw_input('Press Enter to stop recording: ')
+        def quitting():
+            tb.stop()
+            tb.wait()
+        qapp.aboutToQuit.connect(quitting)
+        qapp.exec_()
     except EOFError:
         pass
-    tb.stop()
-    tb.wait()
 
     # record 2
 
@@ -491,10 +494,13 @@ def main():
     tb.start()
     try:
         raw_input('Press Enter to stop recording: ')
+        def quitting():
+            tb.stop()
+            tb.wait()
+        qapp.aboutToQuit.connect(quitting)
+        qapp.exec_()
     except EOFError:
         pass
-    tb.stop()
-    tb.wait()
 
     # replay first
 
@@ -505,10 +511,13 @@ def main():
 
     try:
         raw_input('Press Enter to stop sending first record: ')
+        def quitting():
+            tb.stop()
+            tb.wait()
+        qapp.aboutToQuit.connect(quitting)
+        qapp.exec_()
     except EOFError:
         pass
-    tb.stop()
-    tb.wait()
 
 
     # replay second
@@ -524,10 +533,14 @@ def main():
 
     try:
         raw_input('Press Enter to stop sending second record: ')
+        def quitting():
+            tb.stop()
+            tb.wait()
+        qapp.aboutToQuit.connect(quitting)
+        qapp.exec_()
     except EOFError:
         pass
-    tb.stop()
-    tb.wait()
+
 
 if __name__ == '__main__':
     main()
