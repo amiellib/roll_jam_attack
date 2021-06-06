@@ -172,4 +172,4 @@ def main(first_second, freq, top_block_cls=replay, options=None):
 
 
 if __name__ == '__main__':
-    main(sys.argv[1], sys.argv[2])
+    main(sys.argv[1], float(sys.argv[2]))
