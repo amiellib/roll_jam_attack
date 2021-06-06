@@ -69,7 +69,7 @@ class jam_rec(gr.top_block, Qt.QWidget):
         ##################################################
         self.tx_freq = tx_freq = input_tx_freq
         self.signal_freq = signal_freq = -50000
-        self.shilo_car = shilo_car = 433847000
+        self.car_to_hack = car_to_hack = input_tx_freq
         self.samp_rate_listener = samp_rate_listener = 1000000
         self.samp_rate_jammer = samp_rate_jammer = 20000000
         self.ampl = ampl = 6000
@@ -77,13 +77,13 @@ class jam_rec(gr.top_block, Qt.QWidget):
         ##################################################
         # Blocks
         ##################################################
-        self._shilo_car_tool_bar = Qt.QToolBar(self)
-        self._shilo_car_tool_bar.addWidget(Qt.QLabel("shilo_car"+": "))
-        self._shilo_car_line_edit = Qt.QLineEdit(str(self.shilo_car))
-        self._shilo_car_tool_bar.addWidget(self._shilo_car_line_edit)
-        self._shilo_car_line_edit.returnPressed.connect(
-        	lambda: self.set_shilo_car(int(str(self._shilo_car_line_edit.text().toAscii()))))
-        self.top_grid_layout.addWidget(self._shilo_car_tool_bar)
+        self._car_to_hack_tool_bar = Qt.QToolBar(self)
+        self._car_to_hack_tool_bar.addWidget(Qt.QLabel("car_to_hack"+": "))
+        self._car_to_hack_line_edit = Qt.QLineEdit(str(self.car_to_hack))
+        self._car_to_hack_tool_bar.addWidget(self._car_to_hack_line_edit)
+        self._car_to_hack_line_edit.returnPressed.connect(
+        	lambda: self.set_car_to_hack(int(str(self._car_to_hack_line_edit.text().toAscii()))))
+        self.top_grid_layout.addWidget(self._car_to_hack_tool_bar)
         self.rtlsdr_source_0 = osmosdr.source( args="numchan=" + str(1) + " " + '' )
         self.rtlsdr_source_0.set_sample_rate(samp_rate_listener)
         self.rtlsdr_source_0.set_center_freq(tx_freq, 0)
@@ -300,12 +300,12 @@ class jam_rec(gr.top_block, Qt.QWidget):
         self.signal_freq = signal_freq
         self.analog_sig_source_x_0.set_frequency(self.signal_freq)
 
-    def get_shilo_car(self):
-        return self.shilo_car
+    def get_car_to_hack(self):
+        return self.car_to_hack
 
-    def set_shilo_car(self, shilo_car):
-        self.shilo_car = shilo_car
-        Qt.QMetaObject.invokeMethod(self._shilo_car_line_edit, "setText", Qt.Q_ARG("QString", str(self.shilo_car)))
+    def set_car_to_hack(self, car_to_hack):
+        self.car_to_hack = car_to_hack
+        Qt.QMetaObject.invokeMethod(self._car_to_hack_line_edit, "setText", Qt.Q_ARG("QString", str(self.car_to_hack)))
 
     def get_samp_rate_listener(self):
         return self.samp_rate_listener
