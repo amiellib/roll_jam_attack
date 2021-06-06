@@ -157,17 +157,10 @@ class replay(gr.top_block, Qt.QWidget):
         self.qtgui_freq_sink_x_0.set_frequency_range(433890000, self.samp_rate)
 
 
-def main(top_block_cls=replay, options=None):
-    first_second = ["first_record", "second_record"]
-    chosen_number = input("Choose: 0: first record, 1: second record\n")
-    chosen_freq_number = input("Choose a frequency: 0: 433.89e6, 1: 433.847e6 2: custom\n")
-    freqs = [433.89e6, 433.847e6]
-    if chosen_freq_number == "2":
-        print("asdas")
-        exit()
+def main(first_second, freq, top_block_cls=replay, options=None):
     qapp = Qt.QApplication(sys.argv)
 
-    tb = top_block_cls(input_tx_freq=freqs[chosen_freq_number], file_output=first_second[chosen_number])
+    tb = top_block_cls(input_tx_freq=freq, file_output=first_second)
     tb.start()
     tb.show()
 
@@ -179,4 +172,4 @@ def main(top_block_cls=replay, options=None):
 
 
 if __name__ == '__main__':
-    main()
+    main(argv[1], argv[2])
