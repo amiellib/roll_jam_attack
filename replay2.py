@@ -132,7 +132,7 @@ class replay(gr.top_block, Qt.QWidget):
         self.osmosdr_sink_0.set_antenna('', 0)
         self.osmosdr_sink_0.set_bandwidth(0, 0)
 
-        self.blocks_file_source_0 = blocks.file_source(gr.sizeof_gr_complex*1, '/home/amiel/Desktop/carkey/replay-jamming-attack/signal.raw', True)
+        self.blocks_file_source_0 = blocks.file_source(gr.sizeof_gr_complex*1, os.path.abspath(os.getcwd()) + "/" + file_output + '.raw', True)
         self.blocks_file_source_0.set_begin_tag(pmt.PMT_NIL)
 
 
