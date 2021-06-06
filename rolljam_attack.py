@@ -33,7 +33,10 @@ import osmosdr
 import sip
 import sys
 import time
+<<<<<<< HEAD
 import os
+=======
+>>>>>>> main
 from gnuradio import qtgui
 
 
@@ -464,6 +467,7 @@ class replay(gr.top_block, Qt.QWidget):
 
 
 def main():
+<<<<<<< HEAD
     first_second = ["first_record", "second_record"]
     chosen_type = input("Choose: 0: record and jam, 1: replay\n")
     if chosen_type == 0:
@@ -508,5 +512,81 @@ def main():
             pass
 
 
+=======
+
+    #  jam record :
+    chosen_freq_number = input("Choose a frequency: 0: 433.89e6, 1: 433.847e6 2: custom\n")
+    freqs = [433890000, 433847000]
+    if chosen_freq_number == "2":
+        print("asdas")
+        exit()
+    qapp = Qt.QApplication(sys.argv)
+
+
+
+    try:
+        raw_input('Press Enter to quit: ')
+    except EOFError:
+        pass
+    tb.stop()
+    tb.wait()
+
+
+    tb = jam_rec(input_tx_freq=freqs[chosen_freq_number], file_output="first_record")
+    tb.start()
+    try:
+        raw_input('Press Enter to stop recording: ')
+    except EOFError:
+        pass
+    tb.stop()
+    tb.wait()
+
+    # record 2
+
+
+    tb = jam_rec(input_tx_freq=freqs[chosen_freq_number], file_output="second_record")
+    print "starting second recording"
+    tb.start()
+    try:
+        raw_input('Press Enter to stop recording: ')
+    except EOFError:
+        pass
+    tb.stop()
+    tb.wait()
+
+    # replay first
+
+    qapp = Qt.QApplication(sys.argv)
+
+    tb = replay(input_tx_freq=freqs[chosen_freq_number], file_output="first_record")
+    tb.start()
+
+    try:
+        raw_input('Press Enter to stop sending first record: ')
+    except EOFError:
+        pass
+    tb.stop()
+    tb.wait()
+
+
+    # replay second
+    try:
+        raw_input('Press Enter to stop playing the first: ')
+    except EOFError:
+        pass
+
+    qapp = Qt.QApplication(sys.argv)
+
+    tb = replay(input_tx_freq=freqs[chosen_freq_number], file_output="second_record")
+    tb.start()
+
+    try:
+        raw_input('Press Enter to stop sending second record: ')
+    except EOFError:
+        pass
+    tb.stop()
+    tb.wait()
+
+>>>>>>> main
 if __name__ == '__main__':
     main()
