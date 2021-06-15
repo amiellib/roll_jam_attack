@@ -6,14 +6,14 @@ if chosen_freq_number == "3":
     freqs[2] = input("Choose a frequency\n")
 
 print("recording first")
-subprocess.call('python rolljam2.py first_record ' + str(freqs[int(chosen_freq_number)]), shell=True)
+subprocess.call('python jam_save_corrected.py first_record ' + str(freqs[int(chosen_freq_number)]), shell=True)
 
 print("recording second")
-subprocess.call('python rolljam2.py second_record ' + str(freqs[int(chosen_freq_number)]), shell=True)
+subprocess.call('python jam_save_corrected.py second_record ' + str(freqs[int(chosen_freq_number)]), shell=True)
 
 print("playing first")
-subprocess.call('python replay2.py first_record ' + str(freqs[int(chosen_freq_number)]), shell=True)
+subprocess.call('python replay.py first_record ' + str(freqs[int(chosen_freq_number)]), shell=True)
 
 temp = input("click enter to run second recording")
 print("playing second")
-subprocess.call('python replay2.py second_record ' + str(freqs[int(chosen_freq_number)]), shell=True)
+subprocess.call('python replay.py second_record ' + str(freqs[int(chosen_freq_number)]), shell=True)

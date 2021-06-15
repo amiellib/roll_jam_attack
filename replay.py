@@ -33,12 +33,13 @@ import pmt
 import sip
 import sys
 import time
+import os
 from gnuradio import qtgui
 
 
 class replay(gr.top_block, Qt.QWidget):
 
-    def __init__(self):
+    def __init__(self, input_tx_freq=433.89e6, file_output="signal"):
         gr.top_block.__init__(self, "Replay")
         Qt.QWidget.__init__(self)
         self.setWindowTitle("Replay")
@@ -80,7 +81,7 @@ class replay(gr.top_block, Qt.QWidget):
         self.qtgui_freq_sink_x_0 = qtgui.freq_sink_c(
         	1024, #size
         	firdes.WIN_BLACKMAN_hARRIS, #wintype
-        	433890000, #fc
+        	input_tx_freq, #fc
         	samp_rate, #bw
         	"", #name
         	1 #number of inputs
@@ -123,7 +124,7 @@ class replay(gr.top_block, Qt.QWidget):
         self.osmosdr_sink_0 = osmosdr.sink( args="numchan=" + str(1) + " " + '' )
         self.osmosdr_sink_0.set_time_unknown_pps(osmosdr.time_spec_t())
         self.osmosdr_sink_0.set_sample_rate(4000000)
-        self.osmosdr_sink_0.set_center_freq(433.89e6, 0)
+        self.osmosdr_sink_0.set_center_freq(input_tx_freq, 0)
         self.osmosdr_sink_0.set_freq_corr(0, 0)
         self.osmosdr_sink_0.set_gain(20, 0)
         self.osmosdr_sink_0.set_if_gain(47, 0)
@@ -131,7 +132,7 @@ class replay(gr.top_block, Qt.QWidget):
         self.osmosdr_sink_0.set_antenna('', 0)
         self.osmosdr_sink_0.set_bandwidth(0, 0)
 
-        self.blocks_file_source_0 = blocks.file_source(gr.sizeof_gr_complex*1, '/home/amiel/Desktop/carkey/replay-jamming-attack/signal.raw', True)
+        self.blocks_file_source_0 = blocks.file_source(gr.sizeof_gr_complex*1, os.path.abspath(os.getcwd()) + "/" + file_output + '.raw', True)
         self.blocks_file_source_0.set_begin_tag(pmt.PMT_NIL)
 
 
@@ -153,14 +154,13 @@ class replay(gr.top_block, Qt.QWidget):
 
     def set_samp_rate(self, samp_rate):
         self.samp_rate = samp_rate
-        self.qtgui_freq_sink_x_0.set_frequency_range(433890000, self.samp_rate)
+        self.qtgui_freq_sink_x_0.set_frequency_range(input_tx_freq, self.samp_rate)
 
 
-def main(top_block_cls=replay, options=None):
-
+def main(first_second, freq, top_block_cls=replay, options=None):
     qapp = Qt.QApplication(sys.argv)
 
-    tb = top_block_cls()
+    tb = top_block_cls(input_tx_freq=freq, file_output=first_second)
     tb.start()
     tb.show()
 
@@ -172,4 +172,4 @@ def main(top_block_cls=replay, options=None):
 
 
 if __name__ == '__main__':
-    main()
+    main(sys.argv[1], float(sys.argv[2]))
